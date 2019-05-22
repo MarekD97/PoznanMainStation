@@ -5,8 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PoznanMainStation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Poznan Main Station Simulator" MinHeight="480" MinWidth="800" ResizeMode="CanResizeWithGrip" d:DesignWidth="1183">
     <Grid>
-        
+        <Menu DockPanel.Dock="Top" Height="17" VerticalAlignment="Top">
+            <MenuItem Header="_Simulation">
+                <MenuItem Header="_Start simulation"/>
+                <MenuItem Header="_Stop Simulation"/>
+            </MenuItem>
+        </Menu>
+        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="0,17,0,0" HorizontalContentAlignment="Center" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1200px"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="400px"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="image" Source="Station.png" Grid.ColumnSpan="3" />
+                <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="0, 0, 0,-70" Grid.Row="0">
+                    <Rectangle Fill="#FFCD3E3E" HorizontalAlignment="Left" Height="10" Margin="473,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
+                    <Rectangle Fill="#FFCD3E3E" HorizontalAlignment="Left" Height="10" Margin="518,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
+                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="563,0,597,171" VerticalAlignment="Bottom" Stroke="Black" Width="40"/>
+                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="0,0,552,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
+                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="0,0,507,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
+                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="0,0,462,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
+                </Grid>
+                <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="-195,0,0,126" Grid.Row="0">
+                    <Rectangle Fill="#FF958F1B" HorizontalAlignment="Left" Height="10" Margin="473,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
+                    <Rectangle Fill="#FF958F1B" HorizontalAlignment="Left" Height="10" Margin="518,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
+                    <Rectangle Fill="#FF958F1B" Height="10" Margin="563,0,597,171" VerticalAlignment="Bottom" Stroke="Black" Width="40"/>
+                    <Rectangle Fill="#FF958F1B" Height="10" Margin="0,0,552,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
+                    <Rectangle Fill="#FF958F1B" Height="10" Margin="0,0,507,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
+                    <Rectangle Fill="#FF958F1B" Height="10" Margin="0,0,462,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="34*"/>
+                        <RowDefinition Height="21*"/>
+                        <RowDefinition Height="35*"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="34*"/>
+                        <RowDefinition Height="134*"/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="35*"/>
+                        <RowDefinition Height="21*"/>
+                        <RowDefinition Height="34*"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="21*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="360*"/>
+                        <ColumnDefinition Width="195*"/>
+                        <ColumnDefinition Width="99*"/>
+                        <ColumnDefinition Width="102*"/>
+                        <ColumnDefinition Width="66*"/>
+                        <ColumnDefinition Width="26*"/>
+                        <ColumnDefinition Width="562*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="buttonPlatform6" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Margin="0" Content="Peron 6" Click="ClickPlatform6" />
+                    <Button x:Name="buttonPlatform5" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" Margin="0" Content="Peron 5" />
+                    <Button x:Name="buttonPlatform4" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" Margin="0" Content="Peron 4" />
+                    <Button x:Name="buttonPlatform1" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="8" Margin="0" Content="Peron 1" />
+                    <Button x:Name="buttonPlatform2" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="10" Margin="0" Content="Peron 2" />
+                    <Button x:Name="buttonPlatform3" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="12" Margin="0" Content="Peron 3" />
+                    <Rectangle Grid.Column="4" Fill="Black" Grid.Row="7" Grid.RowSpan="7" Stroke="Black"/>
+                    <Label Content="Dworzec" Grid.Column="4" Margin="0" Grid.Row="10"  Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="Dworzec" Grid.Column="2" Grid.Row="6" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" />
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>

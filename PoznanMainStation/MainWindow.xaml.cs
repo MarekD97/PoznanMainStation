@@ -20,9 +20,18 @@ namespace PoznanMainStation
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int click = 1;
+
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+
+        private void ClickPlatform6(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Super kliknąłeś " + click.ToString() + " razy");
+            click++;
         }
     }
 }
