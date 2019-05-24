@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Diagnostics;
 
 namespace PoznanMainStation
 {
@@ -20,18 +22,46 @@ namespace PoznanMainStation
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int click = 1;
+        private static List<IRunnable> runnables = new List<IRunnable>();
+        private static Station station = new Station();
+        private static List<Thread> threads = new List<Thread>();
+        static int numberOfTrains = 10;    //Liczba wygenerowanych pociągów
+
+        public static Mutex mutex = null;
+
+        static void GenerateRunnables()
+        {
+            runnables.Add(station);
+            for (int i=0;i< numberOfTrains; i++)
+            {
+                runnables.Add(new Train());
+            }
+        }
+
+        static void RunThreads()
+        {
+            foreach (IRunnable a in runnables)
+            {
+                threads.Add(new Thread(new ThreadStart(a.Run)));
+            }
+            foreach (Thread t in threads)
+            {
+                t.Start();
+            }
+            foreach (Thread t in threads)
+            {
+                t.Join();
+            }
+        }
 
         public MainWindow()
         {
             InitializeComponent();
+            mutex = new Mutex(false);
+            GenerateRunnables();
+            RunThreads();
 
-        }
-
-        private void ClickPlatform6(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Super kliknąłeś " + click.ToString() + " razy");
-            click++;
+            Debug.WriteLine("Funkcja głowna");
         }
     }
 }

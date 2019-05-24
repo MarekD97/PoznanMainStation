@@ -67,7 +67,7 @@
                         <ColumnDefinition Width="26*"/>
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="buttonPlatform6" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Margin="0" Content="Peron 6" Click="ClickPlatform6" />
+                    <Button x:Name="buttonPlatform6" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Margin="0" Content="Peron 6" />
                     <Button x:Name="buttonPlatform5" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" Margin="0" Content="Peron 5" />
                     <Button x:Name="buttonPlatform4" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" Margin="0" Content="Peron 4" />
                     <Button x:Name="buttonPlatform1" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="8" Margin="0" Content="Peron 1" />
