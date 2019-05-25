@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Railway.cs" />
     <Compile Include="Station.cs" />
+    <Compile Include="ThreadInvoker.cs" />
     <Compile Include="Train.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
