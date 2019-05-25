@@ -5,82 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PoznanMainStation"
         mc:Ignorable="d"
-        Title="Poznan Main Station Simulator" MinHeight="480" MinWidth="800" ResizeMode="CanResizeWithGrip" d:DesignWidth="1183">
+        Title="Poznan Main Station Simulator" MinHeight="400" MinWidth="800" ResizeMode="CanResizeWithGrip" d:DesignWidth="1183">
     <Grid>
-        <Menu DockPanel.Dock="Top" Height="17" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Menu DockPanel.Dock="Top" Height="17" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <MenuItem Header="_Simulation">
                 <MenuItem Header="_Start simulation"/>
                 <MenuItem Header="_Stop Simulation"/>
             </MenuItem>
         </Menu>
-        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="0,17,0,0" HorizontalContentAlignment="Center" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1200px"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="400px"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Image x:Name="image" Source="Station.png" Grid.ColumnSpan="3" />
-                <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="0, 0, 0,-70" Grid.Row="0">
-                    <Rectangle Fill="#FFCD3E3E" HorizontalAlignment="Left" Height="10" Margin="473,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
-                    <Rectangle Fill="#FFCD3E3E" HorizontalAlignment="Left" Height="10" Margin="518,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
-                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="563,0,597,171" VerticalAlignment="Bottom" Stroke="Black" Width="40"/>
-                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="0,0,552,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
-                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="0,0,507,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
-                    <Rectangle Fill="#FFCD3E3E" Height="10" Margin="0,0,462,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
-                </Grid>
-                <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="-195,0,0,126" Grid.Row="0">
-                    <Rectangle Fill="#FF958F1B" HorizontalAlignment="Left" Height="10" Margin="473,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
-                    <Rectangle Fill="#FF958F1B" HorizontalAlignment="Left" Height="10" Margin="518,0,0,171" VerticalAlignment="Bottom" Width="40" Stroke="Black"/>
-                    <Rectangle Fill="#FF958F1B" Height="10" Margin="563,0,597,171" VerticalAlignment="Bottom" Stroke="Black" Width="40"/>
-                    <Rectangle Fill="#FF958F1B" Height="10" Margin="0,0,552,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
-                    <Rectangle Fill="#FF958F1B" Height="10" Margin="0,0,507,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
-                    <Rectangle Fill="#FF958F1B" Height="10" Margin="0,0,462,171" VerticalAlignment="Bottom" Stroke="Black" HorizontalAlignment="Right" Width="40"/>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="19*"/>
-                        <RowDefinition Height="34*"/>
-                        <RowDefinition Height="21*"/>
-                        <RowDefinition Height="35*"/>
-                        <RowDefinition Height="20*"/>
-                        <RowDefinition Height="34*"/>
-                        <RowDefinition Height="134*"/>
-                        <RowDefinition Height="6*"/>
-                        <RowDefinition Height="35*"/>
-                        <RowDefinition Height="21*"/>
-                        <RowDefinition Height="34*"/>
-                        <RowDefinition Height="20*"/>
-                        <RowDefinition Height="36*"/>
-                        <RowDefinition Height="21*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="360*"/>
-                        <ColumnDefinition Width="195*"/>
-                        <ColumnDefinition Width="99*"/>
-                        <ColumnDefinition Width="102*"/>
-                        <ColumnDefinition Width="66*"/>
-                        <ColumnDefinition Width="26*"/>
-                        <ColumnDefinition Width="562*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="buttonPlatform6" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Margin="0" Content="Peron 6" />
-                    <Button x:Name="buttonPlatform5" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" Margin="0" Content="Peron 5" />
-                    <Button x:Name="buttonPlatform4" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" Margin="0" Content="Peron 4" />
-                    <Button x:Name="buttonPlatform1" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="8" Margin="0" Content="Peron 1" />
-                    <Button x:Name="buttonPlatform2" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="10" Margin="0" Content="Peron 2" />
-                    <Button x:Name="buttonPlatform3" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="12" Margin="0" Content="Peron 3" />
-                    <Rectangle Grid.Column="4" Fill="Black" Grid.Row="7" Grid.RowSpan="7" Stroke="Black"/>
-                    <Label Content="Dworzec" Grid.Column="4" Margin="0" Grid.Row="10"  Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Content="Dworzec" Grid.Column="2" Grid.Row="6" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" />
-                </Grid>
-                <Button x:Name="threadStart" Content="Start" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,192,16" VerticalAlignment="Bottom" Width="75" Click="ThreadStart_Click"/>
-                <Button x:Name="threadStop" Content="Stop" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,98,15" Width="75" VerticalAlignment="Bottom" Click="ThreadStop_Click"/>
-                <TextBox x:Name="logThreadTextBox" Grid.Column="1" HorizontalAlignment="Right" Margin="0,55,33,162" TextWrapping="Wrap" Text="" Width="280" />
-            </Grid>
-        </ScrollViewer>
+        <Grid Grid.Column="1" Margin="0,17,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Rectangle Grid.RowSpan="17" Fill="	#E8C79C"/>
+            <!--Tracks-->
+            <Image Source="track.png" Grid.Row="0" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="2" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="3" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="5" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="6" HorizontalAlignment="Center" Width="3000"/>
+            <Image Grid.Row="8" Source="station.png"/>
+            <Image Source="track.png" Grid.Row="10" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="11" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="13" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="14" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="track.png" Grid.Row="16" HorizontalAlignment="Center" Width="3000"/>
+            <!--Platforms-->
+            <Button x:Name="platform6" Grid.Row="1" Content="Peron 6" BorderBrush="{x:Null}"/>
+            <Button x:Name="platform5" Grid.Row="4" Content="Peron 5" BorderBrush="{x:Null}"/>
+            <Button x:Name="platform4" Grid.Row="7" Content="Peron 4" BorderBrush="{x:Null}"/>
+            <Button x:Name="platform1" Grid.Row="9" Content="Peron 1" BorderBrush="{x:Null}"/>
+            <Button x:Name="platform2" Grid.Row="12" Content="Peron 2" BorderBrush="{x:Null}"/>
+            <Button x:Name="platform3" Grid.Row="15" Content="Peron 3" BorderBrush="{x:Null}"/>
+            <!--Trains-->
+            <Image Source="train.png" Grid.Row="0" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="train.png" Grid.Row="5" HorizontalAlignment="Center" Width="3000"/>
+            <Image Source="train.png" Grid.Row="11" HorizontalAlignment="Center" Width="3000" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                        <SkewTransform AngleY="0" AngleX="0"/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+
+        </Grid>
+        <Label x:Name="departures" Content="Odjazdy" Margin="118,22,122,0" VerticalAlignment="Top" Grid.Column="2" d:LayoutOverrides="Width"/>
+        <Label x:Name="arrivals" Content="Przyjazdy" Margin="106,22,133,0" VerticalAlignment="Top" d:LayoutOverrides="Width"/>
     </Grid>
 </Window>
