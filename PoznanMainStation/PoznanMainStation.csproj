@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Platform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Railway.cs" />
     <Compile Include="Station.cs" />

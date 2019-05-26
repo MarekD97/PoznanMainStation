@@ -9,19 +9,35 @@ namespace PoznanMainStation
 {
     class Train : Railway
     {
-        int arrivalTime;            //Czas przyjazdu pociągu
-        int departureTime;          //Czas odjazdu pociągu
+        int id;
+        TimeSpan arrivalTime;            //Czas przyjazdu pociągu (powiedzmy na razie że czas liczymy od startu symulacji w minutach)
+        TimeSpan departureTime;          //Czas odjazdu pociągu
         int numberOfPassengers;     //Ilość pasażerów w pociągu
         int capacity;               //Ładowność/Maksymalna liczba pasażerów w pociągu
+        int preferredPlatform;
 
         public override void Update()
         {
-            Debug.WriteLine("Update klasy Train");
+            if (Station.stationTime >= arrivalTime)
+            {
+                Station.trainsToEnter.Add(this);
+            }
+
+            if (Station.stationTime >= departureTime)
+            {
+                Station.trainsToLeave.Add(this);
+            }
+            Console.WriteLine("Update klasy Train");
         }
 
-        public Train()
+        public Train(int id, TimeSpan arrival, TimeSpan departure, int passengers, int cap)
         {
-            Debug.Write("Pociąg stworzony");
+            this.id = id;
+            this.arrivalTime = arrival;
+            this.departureTime = departure;
+            this.numberOfPassengers = passengers;
+            this.capacity = cap;
+            Console.WriteLine("Pociąg {0} stworzony", this.id);
         }
 
         void WaitingForPlatform()   //Oczekiwanie na wolny peron

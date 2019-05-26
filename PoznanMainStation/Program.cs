@@ -10,23 +10,26 @@ namespace PoznanMainStation
     {
         public static List<IRunnable> runnables = new List<IRunnable>();
         public static List<Thread> threads = new List<Thread>();
-        static int N = 5; 
+        static int N = 5;
+        
 
         static void GenerateRunnables()
         {
-            for (int i = 0; i<N; i++)
-            {
-
-            }
-            
+            Station Poznan = new Station(3);
+            Train pociag1 = new Train(0, new TimeSpan(8, 0, 0), new TimeSpan(8, 30, 0), 200, 300);
+            runnables.Add(Poznan);
+            runnables.Add(pociag1);
         }
-        
+
         static void RunThreads()
         {
             foreach (IRunnable a in runnables)
             {
                 threads.Add(new Thread(new ThreadStart(a.Run)));
             }
+
+            threads.Add(new Thread(new ThreadStart(App.Main)));
+            threads.Last().SetApartmentState(ApartmentState.STA);
             foreach (Thread t in threads)
             {
                t.Start();
@@ -37,13 +40,11 @@ namespace PoznanMainStation
             }
         }
 
-        [System.STAThreadAttribute()]
         static void Main(string[] args)
         {
             GenerateRunnables();
             RunThreads();
-            Console.WriteLine("test");
-            App.Main();
         }
+
     }
 }
