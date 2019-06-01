@@ -17,8 +17,8 @@ namespace PoznanMainStation
         {
             Station Poznan = new Station(1);
             runnables.Add(Poznan);
-            Train pociag1 = new Train(0, Poznan, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), 200, 300);
-            Train pociag2 = new Train(1, Poznan, new TimeSpan(0, 8, 0), new TimeSpan(0, 12, 0), 200, 300);
+            Train pociag1 = new Train(0, Poznan, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), 200, 300, 1);
+            Train pociag2 = new Train(1, Poznan, new TimeSpan(0, 8, 0), new TimeSpan(0, 12, 0), 200, 300, 1);
             runnables.Add(pociag1);
             runnables.Add(pociag2);
         }

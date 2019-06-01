@@ -36,10 +36,13 @@ namespace PoznanMainStation
             if (allowedToEnter)
             {
                 //na razie pociąg wjeżdża tam gdzie chce, finalnie stacja będzie mu przydzielać peron
-                EntryToThePlatform(preferredPlatform);
+                EntryToThePlatform();
+                this.station.TrainAtPlatform(this);
+                Console.WriteLine("P{0} wjechał na peron {1}", this.id, this.actualPlatform.id);
                 //Wjazd, wyładunek, załadunek
                 Loading();
                 //Wysłanie żądania do stacji o chęci wyjazdu ze stacji
+                allowedToEnter = false;
                 readyToLeave = true;
             }
             //Gdy odpowiedź jest pozytywna:
@@ -47,13 +50,11 @@ namespace PoznanMainStation
             {
                 //wyjazd
                 Leave();
+                readyToLeave = false;
             }
-                
-
-
         }
 
-        public Train(int id, Station station, TimeSpan arrival, TimeSpan departure, int passengers, int cap)
+        public Train(int id, Station station, TimeSpan arrival, TimeSpan departure, int passengers, int cap, int preferredPlatformID)
         {
             this.id = id;
             this.station = station;
@@ -62,15 +63,15 @@ namespace PoznanMainStation
             this.numberOfPassengers = passengers;
             this.capacity = cap;
             this.readyToLeave = false;
-            //this.preferredPlatform = preferredPlatform;
-            Console.WriteLine("Pociąg {0} stworzony", this.id);
+            this.preferredPlatform = this.station.stationPlatforms[preferredPlatformID-1]; //do pociągu przypisany jest preferowany peron, w konstruktorze podaje się jego ID
+            Console.WriteLine("P{0} stworzony", this.id);
         }
 
         
-        void EntryToThePlatform(Platform platform)   //Wjazd na peron
+        void EntryToThePlatform()   //Wjazd na peron
         {
             Thread.Sleep(3000);
-            this.actualPlatform = platform;
+
         }
 
         void Loading()     //wyładunek i załadunek
@@ -78,10 +79,12 @@ namespace PoznanMainStation
             //przykładowo wysiada 1/4 pasażerów, 
             //zależność czasu wysiadania od l. pasażerów jest liniowa
             loadTime = numberOfPassengers * 30 / 4;
-            Console.WriteLine("Pasażerowie wysiadają");
+            Console.WriteLine("P{0} - Pasażerowie wysiadają", this.id);
             Thread.Sleep(loadTime);
-            Console.WriteLine("Pasażerowie wsiadają");
-            //loadTime = 
+            //wsiadanie podobnie, tylko liczbę pasażerów bierzemy z peronu
+            loadTime = this.actualPlatform.GetPassengers() * 30 / 4;
+            Console.WriteLine("P{0} - Pasażerowie wsiadają", this.id);
+            Thread.Sleep(loadTime);
         }
         
         void Leave()
@@ -89,5 +92,20 @@ namespace PoznanMainStation
             Thread.Sleep(3000);
         }
 
+        public void IsAllowedToEnter()
+        {
+            this.allowedToEnter = true;
+            this.actualPlatform.SetAvailability(false);
+        }
+
+        public Platform GetPreferredPlatform()
+        {
+            return this.preferredPlatform;
+        }
+
+        public void SetActualPlatform(Platform actual)
+        {
+            this.actualPlatform = actual;
+        }
     }
 }

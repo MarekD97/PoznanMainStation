@@ -9,19 +9,29 @@ namespace PoznanMainStation
     class Platform 
     {
         bool available;
-        int id;
+        public int id;
         int numberOfPassengers;
 
-        public Platform(int id)
+        public Platform(int id, int numPass)
         {
             this.id = id;
             this.available = true;
-            this.numberOfPassengers = 100; //na razie stała, potem można zrobić losowanie
+            this.numberOfPassengers = numPass;
         }
 
-        bool IsFree()
+        public bool IsFree()
         {
             return available;
+        }
+
+        public void SetAvailability(bool val)
+        {
+            this.available = val;
+        }
+
+        public int GetPassengers()
+        {
+            return numberOfPassengers;
         }
     }
 }

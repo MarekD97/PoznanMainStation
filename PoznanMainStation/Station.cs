@@ -10,12 +10,12 @@ namespace PoznanMainStation
 {
     class Station : Railway
     {
-        private int numberOfPlatforms;  //Liczba wygenerowanych peronów na stacji
+        int numberOfPlatforms;  //Liczba wygenerowanych peronów na stacji
         public TimeSpan stationTime = new TimeSpan(0, 0, 0); //Czas stacji
-        static List<Platform> stationPlatforms = new List<Platform>();
+        public List<Platform> stationPlatforms = new List<Platform>();
 
-        public List<Train> trainsToEnter = new List<Train>(); //pociągi, które czekają na wjazd
-        static List<Train> trainsAtPlatforms = new List<Train>(); //pociągi na peronach
+        List<Train> trainsToEnter = new List<Train>(); //pociągi, które czekają na wjazd
+        List<Train> trainsAtPlatforms = new List<Train>(); //pociągi na peronach
 
         public override void Update()
         {
@@ -32,7 +32,17 @@ namespace PoznanMainStation
                 {
                     //Jeśli preferowany peron przez pociąg jest dostępny (odwołanie IsFree() klasy Platform):
                     //Semafor - jeśli przejazd nie jest bolokowany przez inny pociąg - wjazd
-                    // jeśli jest zablokowany - oczekiwanie     
+                    // jeśli jest zablokowany - oczekiwanie  
+                    if(tr.GetPreferredPlatform().IsFree())
+                    {
+                        tr.SetActualPlatform(tr.GetPreferredPlatform());
+                        tr.IsAllowedToEnter();
+                    }
+                    else
+                    {
+                        //jeśli peron zajęty, to stacja przydziela inny
+                        //tr.SetActualPlatform(inny)
+                    }
                 }
             }
 
@@ -52,7 +62,7 @@ namespace PoznanMainStation
             this.numberOfPlatforms = numberOfPlatforms;
             for (int i = 0; i < this.numberOfPlatforms; i++)
             {
-                stationPlatforms.Add(new Platform(i));
+                stationPlatforms.Add(new Platform(i, 100)); //na razie po 100 ludzi na peron, potem można zrobić losowanie
             }
         }
 
@@ -60,6 +70,13 @@ namespace PoznanMainStation
         public void TrainArrived(Train train)
         {
             trainsToEnter.Add(train);
+        }
+
+        //metoda używana przez pociągi w celu poinformowania stacji o zatrzymaniu się na peronie
+        public void TrainAtPlatform(Train train)
+        {
+            trainsToEnter.Remove(train);
+            trainsAtPlatforms.Add(train);
         }
     }
 }
