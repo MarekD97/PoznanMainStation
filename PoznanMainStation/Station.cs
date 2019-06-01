@@ -28,15 +28,15 @@ namespace PoznanMainStation
             //Sprawdzenie czy jakieś pociągi oczekują na wjazd
             if (trainsToEnter != null)
             {
-                foreach (Train tr in trainsToEnter)
+                for (int i = trainsToEnter.Count - 1; i >= 0; i--)
                 {
                     //Jeśli preferowany peron przez pociąg jest dostępny (odwołanie IsFree() klasy Platform):
                     //Semafor - jeśli przejazd nie jest bolokowany przez inny pociąg - wjazd
                     // jeśli jest zablokowany - oczekiwanie  
-                    if(tr.GetPreferredPlatform().IsFree())
+                    if(trainsToEnter[i].GetPreferredPlatform().IsFree())
                     {
-                        tr.SetActualPlatform(tr.GetPreferredPlatform());
-                        tr.IsAllowedToEnter();
+                        trainsToEnter[i].SetActualPlatform(trainsToEnter[i].GetPreferredPlatform());
+                        trainsToEnter[i].IsAllowedToEnter();
                     }
                     else
                     {
@@ -48,12 +48,12 @@ namespace PoznanMainStation
 
             if (trainsAtPlatforms != null)
             {
-                foreach (Train tr in trainsAtPlatforms)
+                for (int i = trainsAtPlatforms.Count-1; i>=0; i--)
                 {
-                    if (tr.GetReadyToLeave() == true)
+                    if (trainsAtPlatforms[i].GetReadyToLeave() == true)
                     {
-                        tr.IsAllowedToLeave();
-                        trainsAtPlatforms.Remove(tr);
+                        trainsAtPlatforms[i].IsAllowedToLeave();
+                        trainsAtPlatforms.Remove(trainsAtPlatforms[i]);
                     }
                     //Sprawdzenie, czy jakieś pociągi nie mają statusu wyjazdu
                     //Semafor - jeśli przejazd nie jest bolokowany przez inny pociąg - wyjazd
