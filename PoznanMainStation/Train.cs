@@ -38,21 +38,23 @@ namespace PoznanMainStation
             {
                 //na razie pociąg wjeżdża tam gdzie chce, finalnie stacja będzie mu przydzielać peron
                 EntryToThePlatform();
-                this.station.TrainAtPlatform(this);
+                station.TrainAtPlatform(this);
                 Console.WriteLine("P{0} wjechał na peron {1}", this.id, this.actualPlatform.id);
                 //Wjazd, wyładunek, załadunek
                 Loading();
                 //Wysłanie żądania do stacji o chęci wyjazdu ze stacji
-                this.allowedToEnter = false;
-                this.readyToLeave = true;
+                allowedToEnter = false; //nie jestem pewien czy pociąg powinien sam to ustawiać
+                readyToLeave = true;
             }
             //Gdy odpowiedź jest pozytywna:
             if (allowedToLeave)
             {
                 //wyjazd
+                //pociąg powinien jeszcze czekać na swoją godzinę odjazdu
                 Leave();
                 Console.WriteLine("P{0} odjechał", this.id);
-                this.readyToLeave = false;
+                readyToLeave = false;
+                allowedToLeave = false; //nie jestem pewien czy pociąg powinien sam to ustawiać
             }
         }
 
