@@ -27,9 +27,6 @@ namespace PoznanMainStation
             {
                 threads.Add(new Thread(new ThreadStart(a.Run)));
             }
-
-            threads.Add(new Thread(new ThreadStart(App.Main)));
-            threads.Last().SetApartmentState(ApartmentState.STA);
             foreach (Thread t in threads)
             {
                t.Start();
