@@ -50,6 +50,10 @@ namespace PoznanMainStation
             {
                 foreach (Train tr in trainsAtPlatforms)
                 {
+                    if (tr.GetReadyToLeave() == true)
+                    {
+                        tr.IsAllowedToLeave();
+                    }
                     //Sprawdzenie, czy jakieś pociągi nie mają statusu wyjazdu
                     //Semafor - jeśli przejazd nie jest bolokowany przez inny pociąg - wyjazd
                     // jeśli jest zablokowany - oczekiwanie

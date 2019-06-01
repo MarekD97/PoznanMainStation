@@ -20,6 +20,7 @@ namespace PoznanMainStation
         Platform actualPlatform;
         bool allowedToEnter;
         bool readyToLeave;
+        bool allowedToLeave;
         Station station;
 
         public override void Update()
@@ -42,15 +43,16 @@ namespace PoznanMainStation
                 //Wjazd, wyładunek, załadunek
                 Loading();
                 //Wysłanie żądania do stacji o chęci wyjazdu ze stacji
-                allowedToEnter = false;
-                readyToLeave = true;
+                this.allowedToEnter = false;
+                this.readyToLeave = true;
             }
             //Gdy odpowiedź jest pozytywna:
-            if (readyToLeave)
+            if (allowedToLeave)
             {
                 //wyjazd
                 Leave();
-                readyToLeave = false;
+                Console.WriteLine("P{0} odjechał", this.id);
+                this.readyToLeave = false;
             }
         }
 
@@ -90,12 +92,18 @@ namespace PoznanMainStation
         void Leave()
         {
             Thread.Sleep(3000);
+            this.actualPlatform.SetAvailability(true);
         }
 
         public void IsAllowedToEnter()
         {
             this.allowedToEnter = true;
             this.actualPlatform.SetAvailability(false);
+        }
+
+        public void IsAllowedToLeave()
+        {
+            this.allowedToLeave = true;
         }
 
         public Platform GetPreferredPlatform()
@@ -106,6 +114,11 @@ namespace PoznanMainStation
         public void SetActualPlatform(Platform actual)
         {
             this.actualPlatform = actual;
+        }
+
+        public bool GetReadyToLeave()
+        {
+            return readyToLeave;
         }
     }
 }
