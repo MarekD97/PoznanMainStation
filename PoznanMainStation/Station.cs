@@ -10,43 +10,39 @@ namespace PoznanMainStation
 {
     class Station : Railway
     {
-        int noOfPlatforms;
-        public static Timer timer;
-        public static TimeSpan stationTime = new TimeSpan(0, 0, 0);
-        static TimeSpan oneMinute = new TimeSpan(0, 1, 0);
+        private int numberOfPlatforms;  //Liczba wygenerowanych peronów na stacji
+        public static TimeSpan stationTime = new TimeSpan(0, 0, 0); //Czas stacji
         static List<Platform> stationPlatforms = new List<Platform>();
 
         public static List<Train> trainsToEnter; //pociągi, które czekają na wjazd
-        public static List<Train> trainsToLeave; //pociągi, które czekają na wyjazd
         static List<Train> trainsAtPlatforms; //pociągi na peronach
 
         public override void Update()
         {
+            //Zadania stacji
+            Console.WriteLine("Update klasy Station");
+            //Aktualizacja czasu
             Console.WriteLine("Czas stacji: {0}", stationTime);
+            stationTime = stationTime.Add(new TimeSpan(0, 1, 0));
+
+            //Sprawdzenie czy jakieś pociągi oczekują na wjazd
+            //Jeśli preferowany peron przez pociąg jest dostępny (odwołanie IsFree() klasy Platform):
+            //Semafor - jeśli przejazd nie jest bolokowany przez inny pociąg - wjazd
+            // jeśli jest zablokowany - oczekiwanie
+
+            //Sprawdzenie, czy jakieś pociągi nie mają statusu wyjazdu
+            //Semafor - jeśli przejazd nie jest bolokowany przez inny pociąg - wyjazd
+            // jeśli jest zablokowany - oczekiwanie
+
         }
 
-        public Station(int platforms)
+        public Station(int numberOfPlatforms)
         {
-            this.noOfPlatforms = platforms;
-            SetTimer();
-            for (int i = 0; i<noOfPlatforms; i++)
+            this.numberOfPlatforms = numberOfPlatforms;
+            for (int i = 0; i < this.numberOfPlatforms; i++)
             {
                 stationPlatforms.Add(new Platform(i));
             }
-        }
-
-        private static void SetTimer()
-        {
-            timer = new Timer(1000);
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = true;
-            timer.Enabled = true;
-        }
-
-        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            //stacja ma co sekundę sprawdzać czy któryś z pociągów chce wjechać albo wyjechać  
-            stationTime = stationTime.Add(oneMinute);         
         }
     }
 }

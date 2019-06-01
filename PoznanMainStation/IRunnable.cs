@@ -9,7 +9,6 @@ namespace PoznanMainStation
     interface IRunnable
     {
         void Run();
-        IEnumerator<float> CoroutineUpdate();
         bool hasFinished { get; set; }
     }
 }

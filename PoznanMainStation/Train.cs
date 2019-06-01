@@ -18,16 +18,19 @@ namespace PoznanMainStation
 
         public override void Update()
         {
-            if (Station.stationTime >= arrivalTime)
-            {
-                Station.trainsToEnter.Add(this);
-            }
-
-            if (Station.stationTime >= departureTime)
-            {
-                Station.trainsToLeave.Add(this);
-            }
+            //Zadania pociągu
             Console.WriteLine("Update klasy Train");
+            //Gdy czas przyjazdu == czas stacji
+            //Wysłanie żądania do stacji o chęci wjazdu na peron
+            //Gdy odpowiedź jest pozytywna:
+            //Wjazd, wyładunek, załadunek
+            //Inaczej oczekiwanie
+            //Wysłanie żądania do stacji o chęci wyjazdu ze stacji
+            //Gdy odpowiedź jest pozytywna:
+            //wyjazd
+            //Inaczej oczekiwanie
+
+
         }
 
         public Train(int id, TimeSpan arrival, TimeSpan departure, int passengers, int cap)
@@ -50,7 +53,7 @@ namespace PoznanMainStation
 
         }
 
-        void Loading(bool mode)     //mode 0 - rozładunek, mode 1 - załadunek
+        void Loading()     //wyładunek i załadunek
         {
 
         }

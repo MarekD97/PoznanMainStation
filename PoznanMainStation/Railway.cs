@@ -10,7 +10,7 @@ namespace PoznanMainStation
     abstract public class Railway : IRunnable
     {
         public abstract void Update();
-        protected int frequency = 1000;
+        protected int frequency = 1000; //częstotliwość aktualizacji Update()
         protected bool hasFinished { get; set; }
         bool IRunnable.hasFinished { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -20,17 +20,6 @@ namespace PoznanMainStation
             {
                 Update();
                 Thread.Sleep(frequency);
-            }
-        }
-
-        public IEnumerator<float> CoroutineUpdate()
-        {
-            while (true)
-            {
-                Update();
-                Thread.Sleep(frequency);
-                if (hasFinished) yield break;
-                yield return 0;
             }
         }
 
