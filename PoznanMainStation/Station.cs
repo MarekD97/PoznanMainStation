@@ -53,6 +53,7 @@ namespace PoznanMainStation
                     if (tr.GetReadyToLeave() == true)
                     {
                         tr.IsAllowedToLeave();
+                        trainsAtPlatforms.Remove(tr);
                     }
                     //Sprawdzenie, czy jakieś pociągi nie mają statusu wyjazdu
                     //Semafor - jeśli przejazd nie jest bolokowany przez inny pociąg - wyjazd
