@@ -11,22 +11,20 @@ namespace PoznanMainStation
     class Train : Railway
     {
         int id;
-        TimeSpan arrivalTime;            //Czas przyjazdu pociągu (powiedzmy na razie że czas liczymy od startu symulacji w minutach)
-        TimeSpan departureTime;          //Czas odjazdu pociągu
-        int numberOfPassengers;     //Ilość pasażerów w pociągu
+        TimeSpan arrivalTime;           //Czas przyjazdu pociągu (powiedzmy na razie że czas liczymy od startu symulacji w minutach)
+        TimeSpan departureTime;         //Czas odjazdu pociągu
+        int numberOfPassengers;         //Ilość pasażerów w pociągu
         int loadTime;                   //czas potrzebny na rozładunek i załadunek
-        int capacity;               //Ładowność/Maksymalna liczba pasażerów w pociągu
-        Platform preferredPlatform;
-        Platform actualPlatform;
-        bool allowedToEnter;
-        bool readyToLeave;
-        bool allowedToLeave;
+        int capacity;                   //Ładowność/Maksymalna liczba pasażerów w pociągu
+        Platform preferredPlatform;     //Preferowany peron
+        Platform actualPlatform;        //Aktualny peron
+        bool allowedToEnter;            //Zezwolenie na wjazd
+        bool readyToLeave;              //Gotowy do odjazdu
+        bool allowedToLeave;            //Zezwolenie na wyjazd
         Station station;
 
         public override void Update()
         {
-            //Zadania pociągu
-
             //Wysłanie żądania do stacji o chęci wjazdu na peron
             if (this.arrivalTime == this.station.stationTime)
             {

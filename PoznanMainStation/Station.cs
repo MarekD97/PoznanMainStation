@@ -68,7 +68,7 @@ namespace PoznanMainStation
             this.numberOfPlatforms = numberOfPlatforms;
             for (int i = 0; i < this.numberOfPlatforms; i++)
             {
-                stationPlatforms.Add(new Platform(i, 100)); //na razie po 100 ludzi na peron, potem można zrobić losowanie
+                stationPlatforms.Add(new Platform(i+1, 100)); //na razie po 100 ludzi na peron, potem można zrobić losowanie
             }
         }
 
