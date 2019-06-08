@@ -14,9 +14,9 @@ namespace PoznanMainStation
 
         static void GenerateTrains(Station station)
         {
-            Train pociag1 = new Train(0, station, new TimeSpan(0, 2, 0), new TimeSpan(0, 10, 0), 200, 300, 1);
-            Train pociag2 = new Train(1, station, new TimeSpan(0, 3, 0), new TimeSpan(0, 18, 0), 200, 300, 1);
-            Train pociag3 = new Train(2, station, new TimeSpan(0, 4, 0), new TimeSpan(0, 19, 0), 200, 300, 1);
+            Train pociag1 = new Train(18170, station, new TimeSpan(0, 3, 0), new TimeSpan(0, 7, 0), 200, 300, 1);
+            Train pociag2 = new Train(73102, station, new TimeSpan(0, 6, 0), new TimeSpan(0, 11, 0), 200, 300, 1);
+            Train pociag3 = new Train(71110, station, new TimeSpan(0, 4, 0), new TimeSpan(0, 12, 0), 200, 300, 1);
             runnables.Add(pociag1);
             runnables.Add(pociag2);
             runnables.Add(pociag3);

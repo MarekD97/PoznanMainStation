@@ -52,8 +52,8 @@ namespace PoznanMainStation
                 //pociąg powinien jeszcze czekać na swoją godzinę odjazdu
                 if(station.stationTime >= departureTime)
                 {
-                    Leave();
                     Screen.AddTrainDeparture(id, actualPlatform.id);
+                    Leave();
                     readyToLeave = false;
                     allowedToLeave = false; 
                 }

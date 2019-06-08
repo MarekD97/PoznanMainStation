@@ -23,12 +23,10 @@ namespace PoznanMainStation
 
         public static void Display()
         {
-            Console.Beep();
-            Console.Clear();
             Console.WriteLine("[{0}] Stacja: {1}", stationTimeText, stationNameText);
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("{0,15} {1,18} {2,15} {3,18} {4,15} {5,18}", "PRZYJAZDY", "|", "NA STACJI", "|", "ODJAZDY", "");
-            Console.WriteLine(tableTemplate, "POCIĄG", "PERON", "|", "POCIĄG", "PERON", "|", "POCIĄG", "PERON", "");
+            Console.WriteLine(tableTemplate, "POCIĄG", "PREF. PERON", "|", "POCIĄG", "NA PERONIE", "|", "POCIĄG", "ODJ. Z PERONU", "");
             Console.BackgroundColor = ConsoleColor.Black;
 
             int listRow = 0;
@@ -45,7 +43,7 @@ namespace PoznanMainStation
 
             listRow = Math.Max(Math.Max(listCountArrivals, listCountDepartures), listCountAtStation);
             if (listRow < 10)
-                listRow = 10;
+                listRow = 25;
 
             for (int i = 0; i < listRow; i++)
             {
@@ -113,33 +111,36 @@ namespace PoznanMainStation
 
         public static void AddTrainArrival(int idTrain, int platform)
         {
-            trainsArrivalsText.Add("P" + idTrain.ToString());
+            trainsArrivalsText.Add("TLK " + idTrain.ToString());
             trainsArrivalsPlatformText.Add(platform);
 
         }
 
         public static void AddTrainDeparture(int idTrain, int platform)
         {
-            trainsAtStationText.Remove("P" + idTrain.ToString());
-            trainsAtStationPlatformText.Remove(platform);
+            int index = trainsAtStationText.IndexOf("TLK " + idTrain.ToString());
+            trainsAtStationText.RemoveAt(index);
+            trainsAtStationPlatformText.RemoveAt(index);
 
-            trainsDeparturesText.Add("P" + idTrain.ToString());
+            trainsDeparturesText.Add("TLK " + idTrain.ToString());
             trainsDeparturesPlatformText.Add(platform);
         }
 
         public static void AddTrainAtStation(int idTrain, int platform)
         {
-            trainsArrivalsText.Remove("P" + idTrain.ToString());
-            trainsArrivalsPlatformText.Remove(platform);
-
-            trainsAtStationText.Add("P" + idTrain.ToString());
+            int index = trainsArrivalsText.IndexOf("TLK " + idTrain.ToString());
+            trainsArrivalsText.RemoveAt(index);
+            trainsArrivalsPlatformText.RemoveAt(index);
+            
+            trainsAtStationText.Add("TLK " + idTrain.ToString());
             trainsAtStationPlatformText.Add(platform);
         }
 
         public static void RemoveTrain(int idTrain, int platform)
         {
-            trainsDeparturesText.Remove("P" + idTrain.ToString());
-            trainsDeparturesPlatformText.Remove(platform);
+            int index = trainsDeparturesText.IndexOf("TLK " + idTrain.ToString());
+            trainsDeparturesText.RemoveAt(index);
+            trainsDeparturesPlatformText.RemoveAt(index);
         }
     }
 }
