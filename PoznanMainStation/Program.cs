@@ -10,19 +10,23 @@ namespace PoznanMainStation
     {
         public static List<IRunnable> runnables = new List<IRunnable>();
         public static List<Thread> threads = new List<Thread>();
-        static int N = 5;
         
 
-        static void GenerateRunnables()
+        static void GenerateTrains(Station station)
         {
-            Station Poznan = new Station(1, "Poznań Główny");
-            runnables.Add(Poznan);
-            Train pociag1 = new Train(0, Poznan, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), 200, 300, 1);
-            Train pociag2 = new Train(1, Poznan, new TimeSpan(0, 8, 0), new TimeSpan(0, 12, 0), 200, 300, 1);
-            Train pociag3 = new Train(2, Poznan, new TimeSpan(0, 13, 0), new TimeSpan(0, 19, 0), 200, 300, 1);
+            Train pociag1 = new Train(0, station, new TimeSpan(0, 2, 0), new TimeSpan(0, 10, 0), 200, 300, 1);
+            Train pociag2 = new Train(1, station, new TimeSpan(0, 3, 0), new TimeSpan(0, 18, 0), 200, 300, 1);
+            Train pociag3 = new Train(2, station, new TimeSpan(0, 4, 0), new TimeSpan(0, 19, 0), 200, 300, 1);
             runnables.Add(pociag1);
             runnables.Add(pociag2);
             runnables.Add(pociag3);
+        }
+
+        static void GenerateRunnables()
+        {
+            Station Poznan = new Station(5, "Poznań Główny");
+            runnables.Add(Poznan);
+            GenerateTrains(Poznan);            
         }
 
         static void RunThreads()

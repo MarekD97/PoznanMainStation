@@ -18,19 +18,19 @@ namespace PoznanMainStation
         int capacity;                   //Ładowność/Maksymalna liczba pasażerów w pociągu
         Platform preferredPlatform;     //Preferowany peron
         Platform actualPlatform;        //Aktualny peron
-        bool allowedToEnter;            //Zezwolenie na wjazd
+        public bool allowedToEnter;            //Zezwolenie na wjazd
         bool readyToLeave;              //Gotowy do odjazdu
-        bool allowedToLeave;            //Zezwolenie na wyjazd
+        public bool allowedToLeave;            //Zezwolenie na wyjazd
         Station station;
 
         public override void Update()
         {
             //Wysłanie żądania do stacji o chęci wjazdu na peron
-            if (this.arrivalTime == this.station.stationTime)
+            if (arrivalTime == station.stationTime)
             {
-                this.station.TrainArrived(this);
+                station.TrainArrived(this);
                 //Console.WriteLine("\tP{0} : --> przyjazd", this.id);
-                Screen.AddTrainArrival(this.id, preferredPlatform.id);
+                Screen.AddTrainArrival(id, preferredPlatform.id);
             }
             // Gdy odpowiedź jest pozytywna:
             if (allowedToEnter)
@@ -46,15 +46,19 @@ namespace PoznanMainStation
                 readyToLeave = true;
             }
             //Gdy odpowiedź jest pozytywna:
-            if (allowedToLeave)
+            else if (allowedToLeave)
             {
                 //wyjazd
                 //pociąg powinien jeszcze czekać na swoją godzinę odjazdu
-                Leave();
+                if(station.stationTime >= departureTime)
+                {
+                    Leave();
+                    Screen.AddTrainDeparture(id, actualPlatform.id);
+                    readyToLeave = false;
+                    allowedToLeave = false; 
+                }
                 //Console.WriteLine("\tP{0} : <== odjazd z peronu {1}", this.id, this.actualPlatform.id);
-                Screen.AddTrainDeparture(this.id, this.actualPlatform.id);
-                readyToLeave = false;
-                allowedToLeave = false; //nie jestem pewien czy pociąg powinien sam to ustawiać
+                
             }
         }
 
@@ -68,13 +72,18 @@ namespace PoznanMainStation
             this.capacity = cap;
             this.readyToLeave = false;
             this.preferredPlatform = this.station.stationPlatforms[preferredPlatformID-1]; //do pociągu przypisany jest preferowany peron, w konstruktorze podaje się jego ID
+            this.allowedToEnter = false;
+            this.allowedToLeave = false;
+            this.readyToLeave = false;
             //Console.WriteLine("\tP{0} : pociąg stworzony", this.id);
         }
 
         
         void EntryToThePlatform()   //Wjazd na peron
         {
+            station.m_entry.WaitOne();
             Thread.Sleep(3000);
+            station.m_entry.ReleaseMutex();
         }
 
         void Loading()     //wyładunek i załadunek
@@ -93,21 +102,25 @@ namespace PoznanMainStation
         
         void Leave()
         {
+            station.m_exit.WaitOne();
             Thread.Sleep(3000);
+            station.m_exit.ReleaseMutex();
             this.actualPlatform.SetAvailability(true);
             //Console.WriteLine("\tP{0} : <-- odjechał", this.id);
             Screen.RemoveTrain(this.id, this.actualPlatform.id);
         }
 
-        public void IsAllowedToEnter()
+        public bool IsAllowedToEnter()
         {
             this.allowedToEnter = true;
             this.actualPlatform.SetAvailability(false);
+            return true;
         }
 
-        public void IsAllowedToLeave()
+        public bool IsAllowedToLeave()
         {
             this.allowedToLeave = true;
+            return true;
         }
 
         public Platform GetPreferredPlatform()
