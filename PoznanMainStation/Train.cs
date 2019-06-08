@@ -14,51 +14,51 @@ namespace PoznanMainStation
         TimeSpan arrivalTime;           //Czas przyjazdu pociągu (powiedzmy na razie że czas liczymy od startu symulacji w minutach)
         TimeSpan departureTime;         //Czas odjazdu pociągu
         int numberOfPassengers;         //Ilość pasażerów w pociągu
-        int loadTime;                   //czas potrzebny na rozładunek i załadunek
         int capacity;                   //Ładowność/Maksymalna liczba pasażerów w pociągu
         Platform preferredPlatform;     //Preferowany peron
         Platform actualPlatform;        //Aktualny peron
         public bool allowedToEnter;            //Zezwolenie na wjazd
         bool readyToLeave;              //Gotowy do odjazdu
         public bool allowedToLeave;            //Zezwolenie na wyjazd
+        bool arrived;
         Station station;
 
         public override void Update()
         {
-            //Wysłanie żądania do stacji o chęci wjazdu na peron
-            if (arrivalTime == station.stationTime)
+            if (!arrived)
             {
-                station.TrainArrived(this);
-                //Console.WriteLine("\tP{0} : --> przyjazd", this.id);
-                Screen.AddTrainArrival(id, preferredPlatform.id, arrivalTime);
+                if (arrivalTime == station.stationTime)
+                {
+                    lock (SyncObject)
+                    {
+                        //Wysłanie żądania do stacji o chęci wjazdu na peron
+                        station.TrainArrived(this);
+                        arrived = true;
+                    }
+                    Screen.AddTrainArrival(id, preferredPlatform.id, arrivalTime);
+                }
             }
             // Gdy odpowiedź jest pozytywna:
             if (allowedToEnter)
             {
-                //na razie pociąg wjeżdża tam gdzie chce, finalnie stacja będzie mu przydzielać peron
                 EntryToThePlatform();
                 station.TrainAtPlatform(this);
-                //Console.WriteLine("\tP{0} : ==> wjazd na peron {1}", this.id, this.actualPlatform.id);
                 //Wjazd, wyładunek, załadunek
                 Loading();
-                //Wysłanie żądania do stacji o chęci wyjazdu ze stacji
-                allowedToEnter = false; //nie jestem pewien czy pociąg powinien sam to ustawiać
+                allowedToEnter = false;
                 readyToLeave = true;
             }
             //Gdy odpowiedź jest pozytywna:
-            else if (allowedToLeave)
+            if (allowedToLeave)
             {
-                //wyjazd
-                //pociąg powinien jeszcze czekać na swoją godzinę odjazdu
-                if(station.stationTime >= departureTime)
+                if (station.stationTime >= departureTime)
                 {
+                    //wyjazd
                     Screen.AddTrainDeparture(id, actualPlatform.id, departureTime);
                     Leave();
                     readyToLeave = false;
-                    allowedToLeave = false; 
-                }
-                //Console.WriteLine("\tP{0} : <== odjazd z peronu {1}", this.id, this.actualPlatform.id);
-                
+                    allowedToLeave = false;
+                }                
             }
         }
 
@@ -75,6 +75,7 @@ namespace PoznanMainStation
             this.allowedToEnter = false;
             this.allowedToLeave = false;
             this.readyToLeave = false;
+            this.arrived = false;
             //Console.WriteLine("\tP{0} : pociąg stworzony", this.id);
         }
 
@@ -88,15 +89,17 @@ namespace PoznanMainStation
 
         void Loading()     //wyładunek i załadunek
         {
-            //przykładowo wysiada 1/4 pasażerów, 
-            //zależność czasu wysiadania od l. pasażerów jest liniowa
-            loadTime = numberOfPassengers * 30 / 4;
-            //Console.WriteLine("\tP{0} : Pasażerowie wysiadają", this.id);
+            //wsiadanie
+            int gettingOff = numberOfPassengers * 3 / 10;
+            numberOfPassengers -= gettingOff;
+            int loadTime = gettingOff * 100 / 4;
             Screen.AddTrainAtStation(this.id, this.actualPlatform.id, arrivalTime, departureTime, numberOfPassengers);
             Thread.Sleep(loadTime);
+
             //wsiadanie podobnie, tylko liczbę pasażerów bierzemy z peronu
-            loadTime = this.actualPlatform.GetPassengers() * 30 / 4;
-            //Console.WriteLine("\tP{0} : Pasażerowie wsiadają", this.id);
+            int gettingOn = actualPlatform.numberOfPassengers * 7 / 10;
+            actualPlatform.numberOfPassengers -= gettingOn;
+            loadTime = gettingOn * 100 / 4;
             Thread.Sleep(loadTime);
         }
         

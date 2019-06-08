@@ -13,7 +13,7 @@ namespace PoznanMainStation
         protected int frequency = 1000; //częstotliwość aktualizacji Update()
         protected bool hasFinished { get; set; }
         bool IRunnable.hasFinished { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        public static readonly object SyncObject = new object();
         public void Run()
         {
             while (!hasFinished)
