@@ -54,6 +54,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Screen.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Railway.cs" />

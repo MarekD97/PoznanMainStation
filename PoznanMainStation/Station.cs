@@ -23,7 +23,8 @@ namespace PoznanMainStation
             //Zadania stacji
 
             //Aktualizacja czasu
-            Console.WriteLine("Czas stacji: {0}", stationTime);
+            //Console.WriteLine("Czas stacji: {0}", stationTime);
+            Screen.SetStationTime(stationTime);
             stationTime = stationTime.Add(new TimeSpan(0, 1, 0));
 
             //Sprawdzenie czy jakieś pociągi oczekują na wjazd
@@ -61,10 +62,13 @@ namespace PoznanMainStation
                     // jeśli jest zablokowany - oczekiwanie
                 }
             }
+
+            Screen.Display();
         }
 
-        public Station(int numberOfPlatforms)
+        public Station(int numberOfPlatforms, string stationName)
         {
+            Screen.SetStationName(stationName);
             this.numberOfPlatforms = numberOfPlatforms;
             for (int i = 0; i < this.numberOfPlatforms; i++)
             {
