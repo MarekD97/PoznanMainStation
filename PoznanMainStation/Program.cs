@@ -8,25 +8,53 @@ namespace PoznanMainStation
 {
     class Program
     {
-        public static List<IRunnable> runnables = new List<IRunnable>();
-        public static List<Thread> threads = new List<Thread>();
+        static List<IRunnable> runnables = new List<IRunnable>();
+        static List<Thread> threads = new List<Thread>();
+        static int NumberOfTrains = 10;
+        static readonly Random random = new Random();
         
+
+        public static int RandomNumber(int min, int max)
+        {
+            lock(random)
+            {
+                return random.Next(min, max);
+            }
+        }
 
         static void GenerateTrains(Station station)
         {
-            Train pociag1 = new Train(18170, station, new TimeSpan(0, 3, 0), new TimeSpan(0, 7, 0), 200, 300, 1);
-            Train pociag2 = new Train(73102, station, new TimeSpan(0, 6, 0), new TimeSpan(0, 11, 0), 200, 300, 1);
-            Train pociag3 = new Train(71110, station, new TimeSpan(0, 4, 0), new TimeSpan(0, 12, 0), 200, 300, 1);
-            runnables.Add(pociag1);
-            runnables.Add(pociag2);
-            runnables.Add(pociag3);
+            int id;
+            int passengers;
+            int capacity;
+            int timeAtPlatform = 15;
+            int arrival = 1;
+            int departure = arrival + timeAtPlatform;
+            int prefPlatform;
+            
+            Train tr;
+            for (int i=0; i < NumberOfTrains; i++)
+            {
+                id = RandomNumber(10000, 100000);
+                capacity = RandomNumber(100, 400);
+                prefPlatform = RandomNumber(1,station.stationPlatforms.Count()+1);
+                do
+                {
+                    passengers = RandomNumber(50, 300);
+                }
+                while (passengers > capacity);
+                tr = new Train(id, station, new TimeSpan(0, arrival, 0), new TimeSpan(0, departure, 0), passengers, capacity, prefPlatform);
+                runnables.Add(tr);
+                arrival += RandomNumber(1, 5);
+                departure = arrival + timeAtPlatform;
+            }
         }
 
         static void GenerateRunnables()
         {
-            Station Poznan = new Station(5, "Poznań Główny");
+            Station Poznan = new Station(6, "Poznań Główny");
             runnables.Add(Poznan);
-            GenerateTrains(Poznan);            
+            GenerateTrains(Poznan);             
         }
 
         static void RunThreads()

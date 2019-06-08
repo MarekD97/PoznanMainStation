@@ -22,6 +22,8 @@ namespace PoznanMainStation
         public Mutex m_entry = null;
         public Mutex m_exit = null;
 
+        public static readonly object SyncObject = new object();
+
         public override void Update()
         {
             //Zadania stacji
@@ -42,12 +44,9 @@ namespace PoznanMainStation
                     }
                     else
                     {
-                        if (preferredID == 0)
-                        {
-                            preferredID = trainsToEnter[0].GetPreferredPlatform().id;
-                        }
+                        preferredID = trainsToEnter[0].GetPreferredPlatform().id;
                         preferredID++;
-                        if (preferredID >= stationPlatforms.Count())
+                        if (preferredID > stationPlatforms.Count())
                         {
                             preferredID = 1;
                         }
@@ -72,8 +71,11 @@ namespace PoznanMainStation
                     }
                 }
             }
-
             Screen.Display();
+            for (int i = 0; i < this.numberOfPlatforms; i++)
+            {
+                stationPlatforms[i].numberOfPassengers += Program.RandomNumber(1, 5);
+            }
         }
 
         public Station(int numberOfPlatforms, string stationName)
@@ -82,7 +84,7 @@ namespace PoznanMainStation
             this.numberOfPlatforms = numberOfPlatforms;
             for (int i = 0; i < this.numberOfPlatforms; i++)
             {
-                stationPlatforms.Add(new Platform(i+1, 100)); //na razie po 100 ludzi na peron, potem można zrobić losowanie
+                stationPlatforms.Add(new Platform(i+1, Program.RandomNumber(100,200)));
             }
             m_entry = new Mutex();
             m_exit = new Mutex();

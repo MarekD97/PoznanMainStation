@@ -23,6 +23,7 @@ namespace PoznanMainStation
 
         public static void Display()
         {
+            Console.Clear();
             Console.WriteLine("[{0}] Stacja: {1}", stationTimeText, stationNameText);
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("{0,15} {1,18} {2,15} {3,18} {4,15} {5,18}", "PRZYJAZDY", "|", "NA STACJI", "|", "ODJAZDY", "");

@@ -10,13 +10,13 @@ namespace PoznanMainStation
     {
         bool available;
         public int id;
-        int numberOfPassengers;
+        public int numberOfPassengers;
 
         public Platform(int id, int numPass)
         {
             this.id = id;
             this.available = true;
-            this.numberOfPassengers = numPass;
+            this.numberOfPassengers = Program.RandomNumber(10, 100);
         }
 
         public bool IsFree()
