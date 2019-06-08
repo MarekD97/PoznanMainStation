@@ -30,7 +30,7 @@ namespace PoznanMainStation
             {
                 station.TrainArrived(this);
                 //Console.WriteLine("\tP{0} : --> przyjazd", this.id);
-                Screen.AddTrainArrival(id, preferredPlatform.id);
+                Screen.AddTrainArrival(id, preferredPlatform.id, arrivalTime);
             }
             // Gdy odpowiedź jest pozytywna:
             if (allowedToEnter)
@@ -52,7 +52,7 @@ namespace PoznanMainStation
                 //pociąg powinien jeszcze czekać na swoją godzinę odjazdu
                 if(station.stationTime >= departureTime)
                 {
-                    Screen.AddTrainDeparture(id, actualPlatform.id);
+                    Screen.AddTrainDeparture(id, actualPlatform.id, departureTime);
                     Leave();
                     readyToLeave = false;
                     allowedToLeave = false; 
@@ -92,7 +92,7 @@ namespace PoznanMainStation
             //zależność czasu wysiadania od l. pasażerów jest liniowa
             loadTime = numberOfPassengers * 30 / 4;
             //Console.WriteLine("\tP{0} : Pasażerowie wysiadają", this.id);
-            Screen.AddTrainAtStation(this.id, this.actualPlatform.id);
+            Screen.AddTrainAtStation(this.id, this.actualPlatform.id, arrivalTime, departureTime, numberOfPassengers);
             Thread.Sleep(loadTime);
             //wsiadanie podobnie, tylko liczbę pasażerów bierzemy z peronu
             loadTime = this.actualPlatform.GetPassengers() * 30 / 4;

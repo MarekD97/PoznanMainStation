@@ -24,7 +24,7 @@ namespace PoznanMainStation
 
         static void GenerateRunnables()
         {
-            Station Poznan = new Station(5, "Poznań Główny");
+            Station Poznan = new Station(6, "Poznań Główny");
             runnables.Add(Poznan);
             GenerateTrains(Poznan);            
         }
